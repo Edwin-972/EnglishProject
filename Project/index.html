@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guessing Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="menu">
+        <h1>Guessing Game</h1>
+        <button onclick="startGame('Easy')">Easy</button>
+        <button onclick="startGame('intermediate')">intermediate</button>
+        <button onclick="startGame('difficult')">Difficult</button>
+      
+    </div>
+    
+    <div id="game" style="display: none;">
+        <h2 id="question-text">Choose an answer !</h2>
+        <img id="question-image" src="" alt="Image de la question">
+        <button id="play-sound" onclick="playSound()">Listen to the sound
+        </button>
+        <div id="options"></div>
+        <p id="message"></p>
+        <button onclick="returnToMenu()">Menu</button>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        let currentSound = null;
+        let soundTimeout = null;
+
+        function returnToMenu() {
+            document.getElementById("menu").style.display = "block";
+            document.getElementById("game").style.display = "none";
+        }
+
+        function checkEndGame() {
+            if (currentQuestionIndex >= currentQuestions.length) {
+                document.getElementById("message").textContent = "End of questions !";
+                setTimeout(returnToMenu, 2000);
+            }
+        }
+
+        function playSound() {
+            if (currentSound) {
+                currentSound.currentTime = 0; 
+                currentSound.play();
+                soundTimeout = setTimeout(() => {
+                    currentSound.pause();
+                }, 5000); // Stoppe le son après 5 secondes
+            }
+        }
+
+        function stopSound() {
+            if (currentSound) {
+                currentSound.pause();
+                clearTimeout(soundTimeout);
+            }
+        }
+    </script>
+</body>
+</html>
